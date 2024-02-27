@@ -1,0 +1,19 @@
+[Unit]
+Description=Palworld Dedicated Server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=ubuntu
+Group=ubuntu
+Environment="templdpath=$LD_LIBRARY_PATH"
+Environment="LD_LIBRARY_PATH=/home/ubuntu/:$LD_LIBRARY_PATH"
+Environment="SteamAppId=2394010"
+ExecStartPre=/home/ubuntu/palworld-maintenance.sh
+ExecStart=/home/ubuntu/Steam/steamapps/common/PalServer/PalServer.sh -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS EpicApp=PalServer > /dev/null
+Restart=always
+RuntimeMaxSec=4h
+
+
+[Install]
+WantedBy=multi-user.target
